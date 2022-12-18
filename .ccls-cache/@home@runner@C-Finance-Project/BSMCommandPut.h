@@ -1,9 +1,9 @@
-#ifndef COMMAND_CALL
-#define COMMAND_CALL
+#ifndef COMMAND_PUT
+#define COMMAND_PUT
 
 #include "Command.h"
 
-class CommandCall : public Command
+class BSMCommandPut : public Command
 {
   public:
 

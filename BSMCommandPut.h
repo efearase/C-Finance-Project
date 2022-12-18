@@ -3,7 +3,7 @@
 
 #include "Command.h"
 
-class CommandPut : public Command
+class BSMCommandPut : public Command
 {
   public:
 
