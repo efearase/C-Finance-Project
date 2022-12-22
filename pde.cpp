@@ -6,7 +6,7 @@
 
 BlackScholesPDE::BlackScholesPDE(VanillaOption* _option) : option(_option) {}
 
-// Diffusion coefficient,
+// Diffusion coefficient
 // x is the spot price
 double BlackScholesPDE::diff_coeff(double t, double x) const {
   double vol = option->sigma;

@@ -64,6 +64,6 @@ bool PDECommandCall::operator()() {
   double t_dom = t;         // Time period as for the option
   double N = pde_params.N; 
 
-  std::cout << "The value is " <<  0  << std::endl;
+  std::cout << "The value is " <<  pdecall(s, r, sigma,  k, t, x_dom, J , t_dom,  N )   << std::endl;
   return true;
 }

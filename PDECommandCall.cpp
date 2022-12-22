@@ -1,6 +1,7 @@
 #include <cmath>
 #include <iostream>
 
+//#include <Python.h>
 #include "PDECommandCall.h"
 #include "Option.h"
 #include "PDEparams.h"
@@ -36,11 +37,22 @@ double PDECommandCall::pdecall(double s, double r, double sigma, double k,
   delete bs_pde;
   delete call_option;
   delete pay_off_call;
+
+  // Executing python file for data visualisation
+  //char filename[] = "pyemb7.py";
+	//FILE* fp;
+
+	//Py_Initialize();
+
+	//fp = _Py_fopen(filename, "r");
+	//PyRun_SimpleFile(fp, filename);
+
+	//Py_Finalize();
   return 0;
 };
 
 bool PDECommandCall::operator()() {
-  Parameters parameters{{"spot_price", ""},
+  Parameters parameters{//{"spot_price", ""},
                         {"interest_rate", ""},
                         {"volatility", ""},
                         {"strike_price", ""},
@@ -52,18 +64,18 @@ bool PDECommandCall::operator()() {
   PDECommandCall::askParameters(parameters);
   Option option(parameters);
 
-  double s = option.spot_price;
+ // double s = option.spot_price;
   double r = option.interest_rate;
   double sigma = option.volatility;
   double k = option.strike_price;
   double t = option.nb_of_years_before_maturity;
   pde_params pde_params(parameters);
   // FDM discretisation parameters
-  double x_dom = pde_params.x_dom;       // Spot goes from [0.0, 1.0]
-  double J = pde_params.J; 
+  double x_dom = pde_params.x_dom;       // Spot goes from [0.0, x_dom]
+  double J = pde_params.J;         // Number of spatial differencing points
   double t_dom = t;         // Time period as for the option
-  double N = pde_params.N; 
+  double N = pde_params.N;       // Number of temporal differencing points
 
-  std::cout << "The value is " <<  0  << std::endl;
+  std::cout << "The value is " <<  pdecall(s, r, sigma,  k, t, x_dom, J , t_dom,  N )   << std::endl;
   return true;
 }

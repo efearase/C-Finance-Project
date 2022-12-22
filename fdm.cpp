@@ -1,9 +1,10 @@
 #ifndef __FDM_CPP
 #define __FDM_CPP
 
-#include <fstream>
+#include <fstream> // to output the solution surface to disk
 #include "fdm.h"
 
+// a constructor for the abstract base class FDMBase
 FDMBase::FDMBase(double _x_dom, unsigned long _J,
                  double _t_dom, unsigned long _N,
                  ConvectionDiffusionPDE* _pde) 
