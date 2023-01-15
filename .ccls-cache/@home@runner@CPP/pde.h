@@ -1,7 +1,7 @@
 #ifndef __PDE_H
 #define __PDE_H
 
-#include "option.h"
+#include "Option.h"
 
 // Convection Diffusion Equation - Second-order PDE
 class ConvectionDiffusionPDE {
@@ -21,8 +21,8 @@ class ConvectionDiffusionPDE {
 // Black-Scholes PDE
 class BlackScholesPDE : public ConvectionDiffusionPDE {
  public:
-  VanillaOption* option;
-  BlackScholesPDE(VanillaOption* _option);
+  Option option;
+  BlackScholesPDE(Option option);
   
   double diff_coeff(double t, double x) const;
   double conv_coeff(double t, double x) const;

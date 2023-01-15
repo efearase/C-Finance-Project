@@ -1,9 +1,10 @@
 #ifndef __FDM_CPP
 #define __FDM_CPP
 
-#include <fstream>
+#include <fstream> // to output the solution surface to disk
 #include "fdm.h"
 
+// a constructor for the abstract base class FDMBase
 FDMBase::FDMBase(double _x_dom, unsigned long _J,
                  double _t_dom, unsigned long _N,
                  ConvectionDiffusionPDE* _pde) 
@@ -67,7 +68,7 @@ void FDMEulerExplicit::calculate_inner_domain() {
 }
 
 void FDMEulerExplicit::step_march() { 
-  std::ofstream fdm_out("fdm.csv");
+  std::ofstream fdm_out("Output.csv");
 
   while(cur_t < t_dom) {
     cur_t = prev_t + dt;
