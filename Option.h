@@ -1,7 +1,7 @@
 #ifndef OPTION_H
 #define OPTION_H
 
-#include "payoff.h"
+#include "Payoff.h"
 #include <iostream>
 #include <map>
 #include <string>

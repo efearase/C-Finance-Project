@@ -1,7 +1,7 @@
 #ifndef __PAY_OFF_CPP
 #define __PAY_OFF_CPP
 
-#include "payoff.h"
+#include "Payoff.h"
 
 PayOff::PayOff() {}
 

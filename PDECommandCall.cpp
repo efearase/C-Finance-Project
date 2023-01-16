@@ -1,13 +1,11 @@
 #include <cmath>
 #include <iostream>
 
-//#include <Python.h>
 #include "PDECommandCall.h"
 #include "BSMCommandCall.h"
 #include "Option.h"
 #include "PDEparams.h"
-#include "payoff.h"
-//#include "option.h"
+#include "Payoff.h"
 #include "pde.h"
 #include "fdm.h"
 
@@ -23,12 +21,7 @@ const std::string PDECommandCall::getDescription() const {
 double PDECommandCall::pdecall(double s, double r, double sigma, double k,
                         double T, double x_dom, unsigned long J , double t_dom,  unsigned long N ) // To complete
 {
-//  FDMEulerExplicit fdm_euler(x_dom, J, t_dom, N, bs_pde);
-
-  // Run the FDM solver
- // fdm_euler.step_march();
-
-  return 0;
+ return 0;
 };
 
 bool PDECommandCall::operator()() {
@@ -37,9 +30,8 @@ bool PDECommandCall::operator()() {
                         {"volatility", ""},
                         {"strike_price", ""},
                         {"nb_of_years_before_maturity", ""},
-                        {"x_dom", ""},
-                        {"J", ""},
-                        {"N", ""}};
+                        {"spatial_differencing_points", ""},
+                        {"temporal_differencing_points", ""}};
 
   PDECommandCall::askParameters(parameters);
   Option option(parameters);
@@ -51,10 +43,10 @@ bool PDECommandCall::operator()() {
   double t = option.nb_of_years_before_maturity;
   pde_params pde_params(parameters);
   // FDM discretisation parameters
-  double x_dom = pde_params.x_dom;       // Spot goes from [0.0, x_dom]
-  double J = pde_params.J;         // Number of spatial differencing points
+  double x_dom = option.spot_price; 
+  double J = pde_params.spatial_differencing_points;         // Number of spatial differencing points
   double t_dom = t;         // Time period as for the option
-  double N = pde_params.N;       // Number of temporal differencing points
+  double N = pde_params.temporal_differencing_points;       // Number of temporal differencing points
 
   // Create the PayOff and Option objects
   PayOff* pay_off_call = new PayOffCall(k);
@@ -67,7 +59,7 @@ bool PDECommandCall::operator()() {
   // Run the FDM solver
   fdm_euler.step_march();
 
-  std::cout << "The value is "  << std::endl;
+  std::cout << "To get a graph, please call a 'display.py' file. "  << std::endl;
 
   // Delete the PDE, PayOff and Option objects
   delete bs_pde;

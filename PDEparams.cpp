@@ -3,7 +3,6 @@
 #include "PDEparams.h"
 
 pde_params::pde_params(std::map<std::string, std::string> parameters){
-  x_dom = std::stof(parameters["x_dom"]);
-  J = std::stof(parameters["J"]);
-  N = std::stof(parameters["N"]);
+  spatial_differencing_points = std::stof(parameters["spatial_differencing_points"]);
+  temporal_differencing_points = std::stof(parameters["temporal_differencing_points"]);
 }

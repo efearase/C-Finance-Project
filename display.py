@@ -10,7 +10,7 @@ X = np.reshape(x, (20,20))
 Y = np.reshape(y, (20,20))
 Z = np.reshape(z, (20,20))
 
-print X.shape, Y.shape, Z.shape
+print (X.shape, Y.shape, Z.shape)
 
 step = 0.04
 maxval = 1.0
