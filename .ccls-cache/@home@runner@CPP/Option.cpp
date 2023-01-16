@@ -9,4 +9,5 @@ Option::Option(std::map<std::string, std::string> parameters){
   strike_price = std::stof(parameters["strike_price"]);
   nb_of_years_before_maturity = std::stof(parameters["nb_of_years_before_maturity"]);
   pay_off = 0;
+  type = 1;
 }

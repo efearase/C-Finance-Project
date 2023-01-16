@@ -1,7 +1,6 @@
 #ifndef __FDM_H
 #define __FDM_H
-
-#include "pde.h"
+#include "PDE.h"
 #include <vector>
 
 // Finite Difference Method - Abstract Base Class

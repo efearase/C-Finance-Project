@@ -3,10 +3,12 @@
 
 #include "BSMCommandCall.h"
 #include "BSMCommandPut.h"
+#include "PDECommandCall.h"
+#include "PDECommandPut.h"
 #include "Command.h"
 #include "CommandTest.h"
 #include "Console.h"
-#include "PDECommandCall.h"
+
 
 Console::Console() // or "Console(const std::string file_name)" if we have data,
                    // with the following: "data{Data(file_name)}" if we add a
@@ -22,6 +24,7 @@ Console::Console() // or "Console(const std::string file_name)" if we have data,
   BSMCommandPut *command_put = new BSMCommandPut;
   BSMCommandCall *command_call = new BSMCommandCall;
   PDECommandCall *pde_command_call = new PDECommandCall;
+  PDECommandPut *pde_command_put = new PDECommandPut;
 
   // We could use smart pointers here to avoid having to deal with the use of
   // delete.
@@ -30,13 +33,14 @@ Console::Console() // or "Console(const std::string file_name)" if we have data,
   pricing_command["BSMput"] = command_put;
   pricing_command["BSMcall"] = command_call;
   pricing_command["PDEcall"] = pde_command_call;
+  pricing_command["PDEput"] = pde_command_put;
 }
 
 void Console::run() {
   end = false;
   // Test if the user asked to quit (or if the program is tired of working).
   while (!end) {
-    std::cout << "\nCommands:\n\n quit\n help\n test\n BSMput\n BSMcall \n PDEcall \n\n";
+    std::cout << "\nCommands:\n\n quit\n help\n test\n BSMput\n BSMcall \n PDEcall \n PDEput \n\n";
     // We display a request (a "prompt") a command to the user:
     std::cout << "Enter your command: \n"
               << "> ";
@@ -68,6 +72,7 @@ void Console::run() {
   delete pricing_command["BSMput"];
   delete pricing_command["BSMcall"];
   delete pricing_command["PDEcall"];
+  delete pricing_command["PDEput"];
   // As we use dynamic allocation, you have to think about freeing the memory
   // space "manually".
   exit(0);

@@ -2,12 +2,11 @@
 #include <iostream>
 
 #include "PDECommandCall.h"
-#include "BSMCommandCall.h"
 #include "Option.h"
 #include "PDEparams.h"
 #include "Payoff.h"
-#include "pde.h"
-#include "fdm.h"
+#include "PDE.h"
+#include "FDM.h"
 
 const std::string PDECommandCall::getName() const {
   return "Command giving the valuation of a call by Partial Differential Equtions";
@@ -41,6 +40,7 @@ bool PDECommandCall::operator()() {
   double sigma = option.volatility;
   double k = option.strike_price;
   double t = option.nb_of_years_before_maturity;
+  option.type = 1;
   pde_params pde_params(parameters);
   // FDM discretisation parameters
   double x_dom = option.spot_price; 
@@ -53,7 +53,7 @@ bool PDECommandCall::operator()() {
   option.pay_off = pay_off_call;
 
   // Create the PDE and FDM objects
-  BlackScholesPDE* bs_pde = new BlackScholesPDE(option);
+  BlackScholes* bs_pde = new BlackScholes(option);
   FDMEulerExplicit fdm_euler(x_dom, J, t_dom, N, bs_pde);
 
   // Run the FDM solver

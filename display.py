@@ -1,25 +1,29 @@
 from mpl_toolkits.mplot3d import Axes3D
 import matplotlib
 import numpy as np
+import pandas as pd
 from matplotlib import cm
 from matplotlib import pyplot as plt
 
-x, y, z = np.loadtxt('Output.csv', unpack=True)
+data = pd.read_csv('/Users/gosa/Downloads/Output.csv',sep = ' ', names = ['s','t','mv'])
+s = np.array(data['s'])
+t = np.array(data['t'])
+mv = np.array(data['mv'])
 
-X = np.reshape(x, (20,20))
-Y = np.reshape(y, (20,20))
-Z = np.reshape(z, (20,20))
+N = 25
+J = 25 
 
-print (X.shape, Y.shape, Z.shape)
+S = np.reshape(s, (N,J))
+T = np.reshape(t, (N,J))
+MV = np.reshape(mv, (N,J))
 
-step = 0.04
-maxval = 1.0
+
 fig = plt.figure()
-ax = fig.add_subplot(111, projection='3d')
+ax = fig.add_subplot(projection='3d')
 
-ax.plot_surface(X, Y, Z, rstride=1, cstride=1, cmap=cm.YlGnBu_r)
-ax.set_zlim3d(0, 1.0)
-ax.set_xlabel(r'$S$')
-ax.set_ylabel(r'$T-t$')
-ax.set_zlabel(r'$C(S,t)$')
+ax.plot_surface(S, T, MV, rstride=1, cstride=1, cmap=cm.YlGnBu_r)
+ax.set_zlim3d(auto=True)
+ax.set_xlabel(r'$Strike$')
+ax.set_ylabel(r'$Time$ $to$  $Maturity$')
+ax.set_zlabel(r'$MV(S,t)$')
 plt.show()

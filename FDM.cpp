@@ -2,7 +2,7 @@
 #define __FDM_CPP
 
 #include <fstream> // to output the solution surface to disk
-#include "fdm.h"
+#include "FDM.h"
 
 // a constructor for the abstract base class FDMBase
 FDMBase::FDMBase(double _x_dom, unsigned long _J,
@@ -43,29 +43,26 @@ void FDMEulerExplicit::set_initial_conditions() {
 }
 
 void FDMEulerExplicit::calculate_boundary_conditions() {
-  new_result[0] = pde->boundary_left(prev_t, x_values[0]);
-  new_result[J-1] = pde->boundary_right(prev_t, x_values[J-1]);
+  new_result[0] = pde->bound_l(prev_t, x_values[0]);
+  new_result[J-1] = pde->bound_r(prev_t, x_values[J-1]);
 }
 
 void FDMEulerExplicit::calculate_inner_domain() {
   // Only use inner result indices (1 to J-2)
   for (unsigned long j=1; j<J-1; j++) {
     // Temporary variables used throughout
-    double dt_sig = dt * (pde->diff_coeff(prev_t, x_values[j]));
-    double dt_sig_2 = dt * dx * 0.5 * (pde->conv_coeff(prev_t, x_values[j]));
+    double dt_sig = dt * (pde->diffusion_coefficient(prev_t, x_values[j]));
+    double dt_sig_2 = dt * dx * 0.5 * (pde->convection_coefficient(prev_t, x_values[j]));
 
     // Differencing coefficients (see \alpha, \beta and \gamma in text)
     alpha = dt_sig - dt_sig_2;
-    beta = dx * dx - (2.0 * dt_sig) + (dt * dx * dx * (pde->zero_coeff(prev_t, x_values[j])));
+    beta = dx * dx - (2.0 * dt_sig) + (dt * dx * dx * (pde->zero_coefficient(prev_t, x_values[j])));
     gamma = dt_sig + dt_sig_2;
 
     // Update inner values of spatial discretisation grid (Explicit Euler)
     new_result[j] = ( (alpha * old_result[j-1]) + 
                       (beta * old_result[j]) + 
-                      (gamma * old_result[j+1]) )/(dx*dx) - 
-      (dt*(pde->source_coeff(prev_t, x_values[j])));
-  }
-}
+                      (gamma * old_result[j+1]) )/(dx*dx) - (dt*(pde->source_coefficient(prev_t, x_values[j]))); }}
 
 void FDMEulerExplicit::step_march() { 
   std::ofstream fdm_out("Output.csv");
